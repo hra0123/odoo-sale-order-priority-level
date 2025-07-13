@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sales_order_filter_inherit_sale_order_priority_level" model="ir.ui.view">
+        <field name="name">sale.order.search.inherit.quotation.inherit.sale.order.priority.level</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <filter name="order_month" position="after">
+                <separator/>
+                <filter string="Priority" name="filter_priority" domain="[]"
+                        context="{'group_by':'priority_level'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_order_tree_inherit_sale_order_priority_level" model="ir.ui.view">
+        <field name="name">sale.order.tree.upload (orders).inherit.sale.order.priority.level</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="default_order">priority_level desc</attribute>
+            </xpath>
+            <xpath expr="//list/field[@name='name']" position="after">
+                <field name="priority_level"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_quotation_tree_with_onboarding_inherit_sale_order_priority_level" model="ir.ui.view">
+        <field name="name">sale.order.list.inherit.sale.order.priority.level</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="default_order">priority_level desc</attribute>
+            </xpath>
+            <xpath expr="//list/field[@name='name']" position="after">
+                <field name="priority_level"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_form_inherit_sale_order_priority_level" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.sale.order.priority.level</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_order']" position="before">
+                <field name="priority_level" required="1" readonly="state not in ('draft','sent')" force_save="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
